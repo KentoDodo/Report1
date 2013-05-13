@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style>
+<!--
+body {
+	text-align:center;
+}
+
+#contents {
+	width:800px;
+	padding:15px;
+	margin-left:auto;
+    margin-right:auto;
+	text-align:left;
+	border:1px solid;
+	background-color:#FFE;
+}
+
+.paragraph {
+	margin:10px 0px;
+	padding:10px 0px;
+}
+
+pre {
+	border:1px solid;
+	padding:10px;
+	margin:5px;
+	background-color:#EEE;
+}
+
+#example {
+	border:1px solid;
+	padding:10px;
+	margin:5px;
+	background-color:#FFF;
+}
+
+#attent {
+	font-size:80%;
+}
+
+address {
+	text-align:center;
+}
+-->
+</style>
+</head>
+<body><div id="contents">
+	<h2>JavaScriptで文字列を文字コードの配列に変換してみる</h2>
+	<div class="paragraph">
+		汎用性はないかもしれないが、JavaScriptで文字列を文字コード（16進数）の配列に変換してみた。<br>
+		以下に、そのプログラムと解説を記述する。
+	</div>
+	<div class="paragraph">
+	【プログラム】<br>
+	<a name="str2arrayAscii">
+		<pre flie="ascii.js">
+function str2arrayAscii(str) {
+  var array = new Array();
+  for ( var i = 0; i < str.length; i++) {
+    var char = str[i];
+    char = char.charCodeAt(0);
+    char = char.toString(16);
+    while (char.length < 2) {
+      char = "0" + char;
+    }
+    char = "0x" + char;
+    array[i] = char;
+  }
+  return array;
+}
+		</pre>
+	</a>
+	</div>
+	<div class="paragraph">
+		【解説】<br>
+		関数<a href="#str2arrayAscii">str2arrayAscii(str)</a>は、引数<code>str</code>に文字列を入れることで、文字コードの配列Array()を返してくる。<br>
+		関数<a href="#str2arrayAscii">str2arrayAscii(str)</a>の中身では、文字列を１文字ずつ取り出して16進数の文字コードに変換し新しい配列に入れる。と処理を行っている。<br>
+	</div>
+	<div class="paragraph">
+		【実行例】<br>
+		<div id="example">
+		<code>document.write(str2arrayAscii("abc").join()); // 0x61,0x62,0x63 が出力される</code><br>
+		<code>document.write(str2arrayAscii("a\tb").join()); // 0x61,0x09,0x62 が出力される</code><br>
+		<code>document.write(str2arrayAscii("ab\n").join()); // 0x61,0x62,0x0a が出力される</code><br>
+		<code>document.write(str2arrayAscii("\x1b\x00").join()); // 0x1b,0x00 が出力される</code><br>
+		<code>document.write(str2arrayAscii("a\"b").join()); // 0x61,0x22,0x62 が出力される</code><br>
+		</div>
+	</div>
+	<div id="attent"  class="paragraph">
+		この文書では、&lt;pre file=&quot;ascii.js&quot;&gt;〜&lt;/pre&gt;内に関数<a href="#str2arrayAscii">str2arrayAscii(str)</a>が記述されているので、
+		これをパターンマッチすればコピー＆ペーストすることなく、プログラムが取り出せるようになっている。
+	</div>
+	<hr>
+	<address>Writer: Kento Dodo , Updated: 13 May 2013</address>
+</div></body>
+</html>
